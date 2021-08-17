@@ -45,6 +45,14 @@ async def on_message(message):
     prediction = gb.predict(vectorizer.transform([message.content]))
     if prediction == ['whQuestion']:
         await message.channel.send(random.choice(your) + " " + random.choice(mom))
+        return
+    
+    if message.content[:3] == "I\'m" or message.content[:3] == "i\'m":
+        try:
+            await message.channel.send("Hi {}, I'm dad!".format(message.content[4:]))
+        except:
+            print("poopoo")
+        return
 
 @client.event # doesn't work yet
 async def on_member_join(member):
