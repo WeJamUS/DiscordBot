@@ -1,12 +1,11 @@
 import discord
-from dotenv import load_dotenv
 import enum
 from joblib import dump, load
 import numpy
 import os
 import random
 
-load_dotenv()
+# load_dotenv()
 
 class MessageTypes(enum.Enum):
     ACCEPT='Accept'
@@ -62,7 +61,7 @@ async def on_message(message):
             else:
                 await message.channel.send("Hi {}, I'm dad!".format(message.content[idx + len(s) + 1:]))
     except:
-        print("poopoo")
+        print('poopoo')
 
     return
 
@@ -70,5 +69,6 @@ async def on_message(message):
 async def on_member_join(member):
     print('member joined!')
     await member.send('welcome!', mention_author=True)
-
-client.run(os.getenv('TOKEN'))
+print('hi')
+print(os.environ['TOKEN'])
+client.run(os.environ['TOKEN'])
