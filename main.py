@@ -67,6 +67,5 @@ async def on_message(message):
 async def on_member_join(member):
     print('member joined!')
     await member.send('welcome!', mention_author=True)
-print('hi')
-print(os.environ['BOT_TOKEN'])
+
 client.run(os.environ['BOT_TOKEN'])
