@@ -5,8 +5,6 @@ import numpy
 import os
 import random
 
-# load_dotenv()
-
 class MessageTypes(enum.Enum):
     ACCEPT='Accept'
     BYE='Bye'
@@ -28,8 +26,8 @@ your=['your', 'ur', 'yo', 'joe']
 mom=['mom', 'momma', 'mother', 'mum', 'mama']
 im = ["i\'m", "i am", "i’m", "ima", "im"]
 
-# gb = load('gb.pkl')
-# vectorizer = load('vectorizer.pkl')
+gb = load('gb.pkl')
+vectorizer = load('vectorizer.pkl')
 
 client = discord.Client()
 
@@ -48,10 +46,10 @@ async def on_message(message):
         await message.channel.send("up your butt and around the corner")
         return
 
-    # prediction = gb.predict(vectorizer.transform([lowercaseMsg]))
-    # if prediction == ['whQuestion']:
-    #     await message.channel.send(random.choice(your) + " " + random.choice(mom))
-    #     return
+    prediction = gb.predict(vectorizer.transform([lowercaseMsg]))
+    if prediction == ['whQuestion']:
+        await message.channel.send(random.choice(your) + " " + random.choice(mom))
+        return
 
     try:
         for s in im:
@@ -70,5 +68,5 @@ async def on_member_join(member):
     print('member joined!')
     await member.send('welcome!', mention_author=True)
 print('hi')
-print(os.environ['TOKEN'])
-client.run(os.environ['TOKEN'])
+print(os.environ['BOT_TOKEN'])
+client.run(os.environ['BOT_TOKEN'])
