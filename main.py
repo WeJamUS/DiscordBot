@@ -43,7 +43,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.lower().startwith("where"):
+    if message.content.lower().startswith("where"):
         await message.channel.send("up your butt and around the corner")
         return
 
