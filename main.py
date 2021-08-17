@@ -43,11 +43,15 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    if message.content.lower().startwith("where"):
+        await message.channel.send("up your butt and around the corner")
+        return
+
     prediction = gb.predict(vectorizer.transform([message.content]))
     if prediction == ['whQuestion']:
         await message.channel.send(random.choice(your) + " " + random.choice(mom))
         return
-    
+
     try:
         for s in im:
             idx = message.content.find(s)
@@ -57,7 +61,7 @@ async def on_message(message):
                 message.channel.send("Hi {}, I'm dad!".format(message.content[idx + len(s) + 1:]))
     except:
         print("poopoo")
-    
+
     return
 
 @client.event # doesn't work yet
