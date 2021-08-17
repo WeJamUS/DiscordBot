@@ -27,7 +27,7 @@ class MessageTypes(enum.Enum):
 
 your=['your', 'ur', 'yo', 'joe']
 mom=['mom', 'momma', 'mother', 'mum', 'mama']
-im = ["i\'m", "I\'m", "i am", "I am", "I’m", "i’m", "ima", "Ima"]
+im = ["i\'m", "i am", "i’m", "ima", "im"]
 
 gb = load('gb.pkl')
 vectorizer = load('vectorizer.pkl')
@@ -43,22 +43,24 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.lower().startswith("where"):
+    lowercaseMsg = message.content.lower()
+
+    if lowercaseMsg.startswith("where"):
         await message.channel.send("up your butt and around the corner")
         return
 
-    prediction = gb.predict(vectorizer.transform([message.content]))
+    prediction = gb.predict(vectorizer.transform([lowercaseMsg]))
     if prediction == ['whQuestion']:
         await message.channel.send(random.choice(your) + " " + random.choice(mom))
         return
 
     try:
         for s in im:
-            idx = message.content.find(s)
+            idx = lowercaseMsg.rfind(s)
             if idx == -1:
                 continue
             else:
-                message.channel.send("Hi {}, I'm dad!".format(message.content[idx + len(s) + 1:]))
+                await message.channel.send("Hi {}, I'm dad!".format(message.content[idx + len(s) + 1:]))
     except:
         print("poopoo")
 
