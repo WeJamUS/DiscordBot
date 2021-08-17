@@ -29,8 +29,8 @@ your=['your', 'ur', 'yo', 'joe']
 mom=['mom', 'momma', 'mother', 'mum', 'mama']
 im = ["i\'m", "i am", "i’m", "ima", "im"]
 
-gb = load('gb.pkl')
-vectorizer = load('vectorizer.pkl')
+# gb = load('gb.pkl')
+# vectorizer = load('vectorizer.pkl')
 
 client = discord.Client()
 
@@ -49,10 +49,10 @@ async def on_message(message):
         await message.channel.send("up your butt and around the corner")
         return
 
-    prediction = gb.predict(vectorizer.transform([lowercaseMsg]))
-    if prediction == ['whQuestion']:
-        await message.channel.send(random.choice(your) + " " + random.choice(mom))
-        return
+    # prediction = gb.predict(vectorizer.transform([lowercaseMsg]))
+    # if prediction == ['whQuestion']:
+    #     await message.channel.send(random.choice(your) + " " + random.choice(mom))
+    #     return
 
     try:
         for s in im:
