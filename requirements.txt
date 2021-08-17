@@ -2,3 +2,4 @@ discord
 async-timeout==3.0.1
 numpy
 joblib
+sklearn
