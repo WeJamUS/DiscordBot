@@ -27,6 +27,7 @@ class MessageTypes(enum.Enum):
 
 your=['your', 'ur', 'yo', 'joe']
 mom=['mom', 'momma', 'mother', 'mum', 'mama']
+im = ["i\'m", "I\'m", "i am", "I am", "I’m", "i’m", "ima", "Ima"]
 
 gb = load('gb.pkl')
 vectorizer = load('vectorizer.pkl')
@@ -47,12 +48,17 @@ async def on_message(message):
         await message.channel.send(random.choice(your) + " " + random.choice(mom))
         return
     
-    if message.content[:3] == "I\'m" or message.content[:3] == "i\'m":
-        try:
-            await message.channel.send("Hi {}, I'm dad!".format(message.content[4:]))
-        except:
-            print("poopoo")
-        return
+    try:
+        for s in im:
+            idx = message.content.find(s)
+            if idx == -1:
+                continue
+            else:
+                message.channel.send("Hi {}, I'm dad!".format(message.content[idx + len(s) + 1:]))
+    except:
+        print("poopoo")
+    
+    return
 
 @client.event # doesn't work yet
 async def on_member_join(member):
