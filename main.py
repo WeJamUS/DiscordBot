@@ -47,17 +47,20 @@ async def on_message(message):
     if lowercaseMsg.startswith("$"):
         commandMsg = lowercaseMsg[1:].split(" ", 1)
         commandOptions = ""
-        if (commandMsg.startswith("-")):
-            commandMsg = commandMsg.split(" ", 1)
-            commandOptions = commandMsg[0]
-            commandMsg.remove(0)
+        if (len(commandMsg) > 1 and commandMsg[1].startswith("-")):
+            separateCmd = commandMsg[1].split(" ", 1)
+            commandOptions = separateCmd[0]
+            commandMsg[1] = separateCmd[1]
         if commandMsg[0] == "repeat":
             sentMsg = ""
-            for i in range(int(CHARACTER_LIMIT/len(commandMsg[1]))):
-                sentMsg += commandMsg[1]
+            spacing = ""
+            if commandOptions.find("s") != -1:
+                spacing = " "
+            for i in range(int(CHARACTER_LIMIT/(len(commandMsg[1]) + len(spacing)))):
+                sentMsg += commandMsg[1] + spacing
             await message.channel.send(sentMsg)
         else:
-            await message.channel.send("unknown command: \"" + commandMsg[1] + "\"")
+            await message.channel.send("unknown command: \"" + commandMsg[0] + "\"")
 
     if lowercaseMsg.startswith("where"):
         await message.channel.send("up your butt and around the corner")
