@@ -53,7 +53,7 @@ async def on_message(message):
 
     try:
         for s in im:
-            idx = lowercaseMsg.rfind(s)
+            idx = lowercaseMsg.rfind(s+" ")
             if idx == -1:
                 continue
             else:
