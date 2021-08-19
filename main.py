@@ -22,6 +22,8 @@ class MessageTypes(enum.Enum):
     YANSWER='yAnswer'
     YNQUESTION='ynQuestion'
 
+CHARACTER_LIMIT = 2000
+
 your=['your', 'ur', 'yo', 'joe']
 mom=['mom', 'momma', 'mother', 'mum', 'mama']
 im = ["i\'m", "i am", "i’m", "ima", "im"]
@@ -41,6 +43,21 @@ async def on_message(message):
         return
 
     lowercaseMsg = message.content.lower()
+
+    if lowercaseMsg.startswith("$"):
+        commandMsg = lowercaseMsg[1:].split(" ", 1)
+        commandOptions = ""
+        if (commandMsg.startswith("-")):
+            commandMsg = commandMsg.split(" ", 1)
+            commandOptions = commandMsg[0]
+            commandMsg.remove(0)
+        if commandMsg[0] == "repeat":
+            sentMsg = ""
+            for i in range(int(CHARACTER_LIMIT/len(commandMsg[1]))):
+                sentMsg += commandMsg[1]
+            await message.channel.send(sentMsg)
+        else:
+            await message.channel.send("unknown command: \"" + commandMsg[1] + "\"")
 
     if lowercaseMsg.startswith("where"):
         await message.channel.send("up your butt and around the corner")
