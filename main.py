@@ -26,7 +26,7 @@ CHARACTER_LIMIT = 2000
 
 your=['your', 'ur', 'yo', 'joe']
 mom=['mom', 'momma', 'mother', 'mum', 'mama']
-im = ["i\'m", "i am", "i’m", "ima", "im"]
+im = ["i\'m", "i am", "i’m", "im", "ima"]
 
 gb = load('gb.pkl')
 vectorizer = load('vectorizer.pkl')
@@ -70,11 +70,17 @@ async def on_message(message):
 
     try:
         for s in im:
-            idx = lowercaseMsg.rfind(s+" ")
+            idx = lowercaseMsg.rfind(s + " ")
+            if not idx == 0:
+                idx = lowercaseMsg.rfind(" " + s + " ")
+                if idx == -1:
+                    continue
+                idx += 1
             if idx == -1:
                 continue
             else:
                 await message.channel.send("Hi {}, I'm dad!".format(message.content[idx + len(s) + 1:]))
+                break
     except:
         print('poopoo')
 
