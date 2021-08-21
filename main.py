@@ -66,7 +66,7 @@ async def on_message(message):
             await message.channel.send("unknown command: \"" + commandMsg[0] + "\"")
 
     # Respond to a 'where' type question
-    if lowercaseMsg.startswith("where"):
+    if "where" in lowercaseMsg:
         await message.channel.send("up your butt and around the corner")
         return
 
