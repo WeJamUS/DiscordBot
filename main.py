@@ -5,6 +5,7 @@ import numpy
 import os
 import random
 
+# Constants
 class MessageTypes(enum.Enum):
     ACCEPT='Accept'
     BYE='Bye'
@@ -21,13 +22,12 @@ class MessageTypes(enum.Enum):
     WHQUESTION='whQuestion'
     YANSWER='yAnswer'
     YNQUESTION='ynQuestion'
-
 CHARACTER_LIMIT = 2000
-
 your=['your', 'ur', 'yo', 'joe']
 mom=['mom', 'momma', 'mother', 'mum', 'mama']
 im = ["i\'m", "i am", "i’m", "im", "ima"]
 
+# Load question classification model
 gb = load('gb.pkl')
 vectorizer = load('vectorizer.pkl')
 
@@ -37,13 +37,16 @@ client = discord.Client()
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
+# Handle message responses
 @client.event
 async def on_message(message):
+    # Don't respond to a message from ourselves
     if message.author == client.user:
         return
 
     lowercaseMsg = message.content.lower()
 
+    # Respond to command messages that begin with $
     if lowercaseMsg.startswith("$"):
         commandMsg = lowercaseMsg[1:].split(" ", 1)
         commandOptions = ""
@@ -62,10 +65,17 @@ async def on_message(message):
         else:
             await message.channel.send("unknown command: \"" + commandMsg[0] + "\"")
 
+    # Respond to a 'where' type question
     if lowercaseMsg.startswith("where"):
         await message.channel.send("up your butt and around the corner")
         return
 
+    # Respond to 'wei shen me'
+    if "shen me" in lowercaseMsg:
+        await message.channel.send(random.choice(your) + " " + random.choice(mom))
+        return
+
+    # Respond to a who/what/when/why/how type question
     prediction = gb.predict(vectorizer.transform([lowercaseMsg]))
     if prediction == ['whQuestion']:
         await message.channel.send(random.choice(your) + " " + random.choice(mom))
@@ -94,4 +104,5 @@ async def on_member_join(member):
     print('member joined!')
     await member.send('welcome!', mention_author=True)
 
+# Start bot
 client.run(os.environ['BOT_TOKEN'])
