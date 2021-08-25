@@ -4,8 +4,11 @@ from joblib import dump, load
 import numpy
 import os
 import random
+import sys
 
 # Constants
+DEBUGGING = False
+MENTION_WEJAMUS = "<@339859157404614657>"
 class MessageTypes(enum.Enum):
     ACCEPT='Accept'
     BYE='Bye'
@@ -25,6 +28,7 @@ class MessageTypes(enum.Enum):
 CHARACTER_LIMIT = 2000
 your=['your', 'ur', 'yo', 'joe']
 mom=['mom', 'momma', 'mother', 'mum', 'mama']
+dad=['dad', 'daddy']
 im = ["i\'m", "i am", "i’m", "im", "ima"]
 
 # Load question classification model
@@ -44,8 +48,9 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    # Convert message to lowercase before parsing
     lowercaseMsg = message.content.lower()
-
+    
     # Respond to command messages that begin with $
     if lowercaseMsg.startswith("$"):
         commandMsg = lowercaseMsg[1:].split(" ", 1)
@@ -64,6 +69,11 @@ async def on_message(message):
             await message.channel.send(sentMsg)
         else:
             await message.channel.send("unknown command: \"" + commandMsg[0] + "\"")
+
+    # Respond to messages containing daddy
+        if "daddy" in lowercaseMsg:
+            await message.channel.send(MENTION_WEJAMUS + " is my daddy!")
+            return
 
     # Respond to a 'where' type question
     if "where" in lowercaseMsg:
@@ -96,6 +106,10 @@ async def on_message(message):
                 break
     except:
         print('poopoo')
+    
+    if (DEBUGGING):
+        # Flush stdout stream so print statements actually show up when debugging locally
+        sys.stdout.flush()
 
     return
 
