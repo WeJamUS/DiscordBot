@@ -50,7 +50,7 @@ async def on_message(message):
 
     # Convert message to lowercase before parsing
     lowercaseMsg = message.content.lower()
-    
+
     # Respond to command messages that begin with $
     if lowercaseMsg.startswith("$"):
         commandMsg = lowercaseMsg[1:].split(" ", 1)
@@ -71,9 +71,9 @@ async def on_message(message):
             await message.channel.send("unknown command: \"" + commandMsg[0] + "\"")
 
     # Respond to messages containing daddy
-        if "daddy" in lowercaseMsg:
-            await message.channel.send(MENTION_WEJAMUS + " is my daddy!")
-            return
+    if "daddy" in lowercaseMsg:
+        await message.channel.send(MENTION_WEJAMUS + " is my daddy!")
+        return
 
     # Respond to a 'where' type question
     if "where" in lowercaseMsg:
@@ -106,7 +106,7 @@ async def on_message(message):
                 break
     except:
         print('poopoo')
-    
+
     if (DEBUGGING):
         # Flush stdout stream so print statements actually show up when debugging locally
         sys.stdout.flush()
