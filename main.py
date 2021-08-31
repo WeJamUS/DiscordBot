@@ -59,7 +59,7 @@ async def on_message(message):
             separateCmd = commandMsg[1].split(" ", 1)
             commandOptions = separateCmd[0]
             commandMsg[1] = separateCmd[1]
-        if commandMsg[0] == "repeat":
+        if commandMsg[0] == "repeat" or commandMsg[0] == "r":
             sentMsg = ""
             spacing = ""
             if commandOptions.find("s") != -1:
