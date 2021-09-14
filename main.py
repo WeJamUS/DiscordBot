@@ -29,7 +29,7 @@ CHARACTER_LIMIT = 2000
 your=['your', 'ur', 'yo', 'joe']
 mom=['mom', 'momma', 'mother', 'mum', 'mama']
 dad=['dad', 'daddy']
-im = ["i\'m", "i am", "i’m", "im", "ima"]
+im = ["i\'m", "i am", "i’m", "im", "ima", "i`m"]
 
 # Load question classification model
 gb = load('gb.pkl')
